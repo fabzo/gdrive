@@ -166,6 +166,17 @@ func uploadSyncHandler(ctx cli.Context) {
 	checkErr(err)
 }
 
+func fixSyncHierarchyHandler(ctx cli.Context) {
+	args := ctx.Args()
+	err := newDrive(args).FixSyncHierarchy(drive.FixSyncHierarchyArgs{
+		Out:              os.Stdout,
+		Progress:         progressWriter(args.Bool("noProgress")),
+		RootId:           args.String("fileId"),
+		DryRun:           args.Bool("dryRun"),
+	})
+	checkErr(err)
+}
+
 func updateHandler(ctx cli.Context) {
 	args := ctx.Args()
 	err := newDrive(args).Update(drive.UpdateArgs{

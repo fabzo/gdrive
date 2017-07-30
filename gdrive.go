@@ -630,6 +630,28 @@ func main() {
 			},
 		},
 		&cli.Handler{
+			Pattern:     "[global] sync fix [options] <fileId>",
+			Description: "Fix sync hierarchy in drive",
+			Callback:    fixSyncHierarchyHandler,
+			FlagGroups: cli.FlagGroups{
+				cli.NewFlagGroup("global", globalFlags...),
+				cli.NewFlagGroup("options",
+					cli.BoolFlag{
+						Name:        "dryRun",
+						Patterns:    []string{"--dry-run"},
+						Description: "Show what would have been changed",
+						OmitValue:   true,
+					},
+					cli.BoolFlag{
+						Name:        "noProgress",
+						Patterns:    []string{"--no-progress"},
+						Description: "Hide progress",
+						OmitValue:   true,
+					},
+				),
+			},
+		},
+		&cli.Handler{
 			Pattern:     "[global] changes [options]",
 			Description: "List file changes",
 			Callback:    listChangesHandler,
