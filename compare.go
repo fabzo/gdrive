@@ -8,6 +8,12 @@ import (
 
 const MinCacheFileSize = 5 * 1024 * 1024
 
+type SizeComparer struct{}
+
+func (self SizeComparer) Changed(local *drive.LocalFile, remote *drive.RemoteFile) bool {
+	return remote.Size() != local.Size()
+}
+
 type Md5Comparer struct{}
 
 func (self Md5Comparer) Changed(local *drive.LocalFile, remote *drive.RemoteFile) bool {

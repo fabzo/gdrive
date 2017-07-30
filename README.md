@@ -391,6 +391,7 @@ options:
   --dry-run             Show what would have been transferred
   --no-progress         Hide progress
   --timeout <timeout>   Set timeout in seconds, use 0 for no timeout. Timeout is reached when no data is transferred in set amount of seconds, default: 300
+  --compare-size-only   Compare file size instead of md5 sum
 ```
 
 #### Sync local directory to drive
@@ -412,6 +413,7 @@ options:
   --no-progress             Hide progress
   --timeout <timeout>       Set timeout in seconds, use 0 for no timeout. Timeout is reached when no data is transferred in set amount of seconds, default: 300
   --chunksize <chunksize>   Set chunk size in bytes, default: 8388608
+  --compare-size-only       Compare file size instead of md5 sum
 ```
 
 #### List file changes
