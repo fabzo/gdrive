@@ -81,7 +81,6 @@ func downloadQueryHandler(ctx cli.Context) {
 
 func downloadSyncHandler(ctx cli.Context) {
 	args := ctx.Args()
-	cachePath := filepath.Join(args.String("configDir"), DefaultCacheFileName)
 	err := newDrive(args).DownloadSync(drive.DownloadSyncArgs{
 		Out:              os.Stdout,
 		Progress:         progressWriter(args.Bool("noProgress")),
@@ -91,7 +90,7 @@ func downloadSyncHandler(ctx cli.Context) {
 		DeleteExtraneous: args.Bool("deleteExtraneous"),
 		Timeout:          durationInSeconds(args.Int64("timeout")),
 		Resolution:       conflictResolution(args),
-		Comparer:         NewCachedMd5Comparer(cachePath),
+		Comparer:         newComparer(args),
 	})
 	checkErr(err)
 }
@@ -150,7 +149,6 @@ func uploadStdinHandler(ctx cli.Context) {
 
 func uploadSyncHandler(ctx cli.Context) {
 	args := ctx.Args()
-	cachePath := filepath.Join(args.String("configDir"), DefaultCacheFileName)
 	err := newDrive(args).UploadSync(drive.UploadSyncArgs{
 		Out:              os.Stdout,
 		Progress:         progressWriter(args.Bool("noProgress")),
@@ -161,7 +159,7 @@ func uploadSyncHandler(ctx cli.Context) {
 		ChunkSize:        args.Int64("chunksize"),
 		Timeout:          durationInSeconds(args.Int64("timeout")),
 		Resolution:       conflictResolution(args),
-		Comparer:         NewCachedMd5Comparer(cachePath),
+		Comparer:         newComparer(args),
 	})
 	checkErr(err)
 }
@@ -454,4 +452,16 @@ func checkDownloadArgs(args cli.Arguments) {
 	if args.Bool("recursive") && args.Bool("delete") {
 		ExitF("--delete is not allowed for recursive downloads")
 	}
+}
+
+func newComparer(args cli.Arguments) drive.FileComparer {
+
+	if args.Bool("compareSizeOnly") {
+		fmt.Println("File comparison mode: compare size only")
+		return SizeCompare{}
+	}
+
+	fmt.Println("File comparison mode: compare md5 sum")
+	cachePath := filepath.Join(args.String("configDir"), DefaultCacheFileName)
+	return NewCachedMd5Comparer(cachePath)
 }
