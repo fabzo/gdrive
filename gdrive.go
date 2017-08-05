@@ -597,7 +597,13 @@ func main() {
 						OmitValue:   true,
 					},
 					cli.BoolFlag{
-						Name:        "deleteExtraneous",
+						Name:        "deleteUploaded",
+						Patterns:    []string{"--delete-uploaded"},
+						Description: "Delete uploaded local files",
+						OmitValue:   true,
+					},
+					cli.BoolFlag{
+					 	Name:        "deleteExtraneous",
 						Patterns:    []string{"--delete-extraneous"},
 						Description: "Delete extraneous remote files",
 						OmitValue:   true,

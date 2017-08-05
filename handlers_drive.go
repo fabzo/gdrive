@@ -157,6 +157,7 @@ func uploadSyncHandler(ctx cli.Context) {
 		Path:             args.String("path"),
 		RootId:           args.String("fileId"),
 		DryRun:           args.Bool("dryRun"),
+		Delete:           args.Bool("deleteUploaded"),
 		DeleteExtraneous: args.Bool("deleteExtraneous"),
 		ChunkSize:        args.Int64("chunksize"),
 		Timeout:          durationInSeconds(args.Int64("timeout")),

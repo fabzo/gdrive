@@ -18,6 +18,7 @@ type UploadSyncArgs struct {
 	Path             string
 	RootId           string
 	DryRun           bool
+	Delete			 bool
 	DeleteExtraneous bool
 	ChunkSize        int64
 	Timeout          time.Duration
@@ -203,6 +204,14 @@ func (self *Drive) uploadMissingFiles(missingFiles []*LocalFile, files *syncFile
 		err := self.uploadMissingFile(parent.file.Id, lf, args, 0)
 		if err != nil {
 			return err
+		}
+
+		if args.Delete {
+			err = os.Remove(lf.absPath)
+			if err != nil {
+				return fmt.Errorf("Failed to delete file: %s", err)
+			}
+			fmt.Fprintf(args.Out, "Removed %s\n", args.Path)
 		}
 	}
 
