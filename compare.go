@@ -3,7 +3,8 @@ package main
 import (
 	"encoding/json"
 	"os"
-	"gdrive/drive"
+  
+	"github.com/fabzo/gdrive/drive"
 )
 
 const MinCacheFileSize = 5 * 1024 * 1024

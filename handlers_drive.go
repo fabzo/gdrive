@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"gdrive/auth"
-	"gdrive/cli"
-	"gdrive/drive"
+	"github.com/fabzo/gdrive/auth"
+	"github.com/fabzo/gdrive/cli"
+	"github.com/fabzo/gdrive/drive"
 )
 
 const ClientId = "367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com"
@@ -155,6 +155,7 @@ func uploadSyncHandler(ctx cli.Context) {
 		Path:             args.String("path"),
 		RootId:           args.String("fileId"),
 		DryRun:           args.Bool("dryRun"),
+		Delete:           args.Bool("deleteUploaded"),
 		DeleteExtraneous: args.Bool("deleteExtraneous"),
 		ChunkSize:        args.Int64("chunksize"),
 		Timeout:          durationInSeconds(args.Int64("timeout")),
