@@ -3,10 +3,17 @@ package main
 import (
 	"encoding/json"
 	"os"
+  
 	"github.com/fabzo/gdrive/drive"
 )
 
 const MinCacheFileSize = 5 * 1024 * 1024
+
+type SizeCompare struct{}
+
+func (self SizeCompare) Changed(local *drive.LocalFile, remote *drive.RemoteFile) bool {
+	return remote.Size() != local.Size()
+}
 
 type Md5Comparer struct{}
 
