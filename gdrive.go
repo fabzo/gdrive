@@ -597,8 +597,8 @@ func main() {
 						OmitValue:   true,
 					},
 					cli.BoolFlag{
-						Name:        "deleteUploaded",
-						Patterns:    []string{"--delete-uploaded"},
+						Name:        "delete",
+						Patterns:    []string{"--delete"},
 						Description: "Delete uploaded local files",
 						OmitValue:   true,
 					},
